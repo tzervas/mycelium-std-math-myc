@@ -1,0 +1,120 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+  "emitted_items": [
+    "co-include:RoundMode",
+    "MathErr"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 1,
+      "col": 1,
+      "category": "InnerAttr",
+      "rust_construct": "InnerAttr",
+      "snippet": "# ! [forbid (unsafe_code)]",
+      "reason": "crate/file-level inner attributes (#![...]) are not transpiled (no nodule-header equivalent for these Rust-specific directives)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 91,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod approx ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "approx"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 92,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod exact ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "exact"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 93,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod matrix ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "matrix"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 95,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use approx :: { Approx , ApproxExplain } ;",
+      "reason": "`use approx::Approx` — `Approx` is not among sibling `approx`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use approx::ApproxExplain` — `ApproxExplain` is not among sibling `approx`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 97,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use matrix :: { assert_matrix_invariants , GuaranteeRow , GUARANTEE_MATRIX } ;",
+      "reason": "`use matrix::assert_matrix_invariants` — `assert_matrix_invariants` is not among sibling `matrix`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use matrix::GuaranteeRow` — `GuaranteeRow` is not among sibling `matrix`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use matrix::GUARANTEE_MATRIX` — `GUARANTEE_MATRIX` is not among sibling `matrix`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 101,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The explicit error set for fallible `std.math` ops (spec §3; C1 / G2).\"] # [doc = \"\"] # [doc = \" Every domain restriction surfaces as one of these variants — **never** as a NaN, ±Inf,\"] # [doc = \" sentinel, or silent clamp. The variant name is the EXPLAIN artifact for a refusal (C3).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum MathErr { # [doc = \" Division (or ratio construction) with a zero divisor.\"] DivByZero , # [doc = \" Argument is negative where it must be non-negative (e.g. `sqrt(x < 0)`).\"] NegativeDomain , # [doc = \" Argument is non-positive where it must be strictly positive (e.g. `log(x ≤ 0)`).\"] NonPositiveDomain , # [doc = \" Base argument is invalid for `logb` (e.g. base ≤ 0, base = 1, or base is NaN/Inf).\"] BadBase , # [doc = \" Argument is at a pole of the function (e.g. `tan` at an odd multiple of π/2).\"] PoleDomain , # [doc = \" Argument is outside the function's domain (e.g. `asin(|x| > 1)`).\"] OutOfDomain , # [doc = \" Result magnitude exceeds the representable range of `f64`.\"] Overflow , }",
+      "reason": "enum `MathErr` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "MathErr"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 101,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The explicit error set for fallible `std.math` ops (spec §3; C1 / G2).\"] # [doc = \"\"] # [doc = \" Every domain restriction surfaces as one of these variants — **never** as a NaN, ±Inf,\"] # [doc = \" sentinel, or silent clamp. The variant name is the EXPLAIN artifact for a refusal (C3).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum MathErr { # [doc = \" Division (or ratio construction) with a zero divisor.\"] DivByZero , # [doc = \" Argument is negative where it must be non-negative (e.g. `sqrt(x < 0)`).\"] NegativeDomain , # [doc = \" Argument is non-positive where it must be strictly positive (e.g. `log(x ≤ 0)`).\"] NonPositiveDomain , # [doc = \" Base argument is invalid for `logb` (e.g. base ≤ 0, base = 1, or base is NaN/Inf).\"] BadBase , # [doc = \" Argument is at a pole of the function (e.g. `tan` at an odd multiple of π/2).\"] PoleDomain , # [doc = \" Argument is outside the function's domain (e.g. `asin(|x| > 1)`).\"] OutOfDomain , # [doc = \" Result magnitude exceeds the representable range of `f64`.\"] Overflow , }",
+      "reason": "enum `MathErr` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "MathErr"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 101,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The explicit error set for fallible `std.math` ops (spec §3; C1 / G2).\"] # [doc = \"\"] # [doc = \" Every domain restriction surfaces as one of these variants — **never** as a NaN, ±Inf,\"] # [doc = \" sentinel, or silent clamp. The variant name is the EXPLAIN artifact for a refusal (C3).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum MathErr { # [doc = \" Division (or ratio construction) with a zero divisor.\"] DivByZero , # [doc = \" Argument is negative where it must be non-negative (e.g. `sqrt(x < 0)`).\"] NegativeDomain , # [doc = \" Argument is non-positive where it must be strictly positive (e.g. `log(x ≤ 0)`).\"] NonPositiveDomain , # [doc = \" Base argument is invalid for `logb` (e.g. base ≤ 0, base = 1, or base is NaN/Inf).\"] BadBase , # [doc = \" Argument is at a pole of the function (e.g. `tan` at an odd multiple of π/2).\"] PoleDomain , # [doc = \" Argument is outside the function's domain (e.g. `asin(|x| > 1)`).\"] OutOfDomain , # [doc = \" Result magnitude exceeds the representable range of `f64`.\"] Overflow , }",
+      "reason": "enum `MathErr` derive(Eq): covered by co-occurring PartialEq → `fn eq_MathErr` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "MathErr"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 123,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl core :: fmt :: Display for MathErr { fn fmt (& self , f : & mut core :: fmt :: Formatter < '_ >) -> core :: fmt :: Result { let s = match self { MathErr :: DivByZero => \"DivByZero: divisor is zero\" , MathErr :: NegativeDomain => { \"NegativeDomain: argument must be non-negative (e.g. sqrt requires x >= 0)\" } MathErr :: NonPositiveDomain => { \"NonPositiveDomain: argument must be strictly positive (e.g. log requires x > 0)\" } MathErr :: BadBase => { \"BadBase: logarithm base must be > 0, != 1, and finite (e.g. logb(b, x))\" } MathErr :: PoleDomain => { \"PoleDomain: argument is at a pole of the function (e.g. tan at pi/2 + n*pi)\" } MathErr :: OutOfDomain => { \"OutOfDomain: argument is outside the function's domain (e.g. asin requires |x| <= 1)\" } MathErr :: Overflow => { \"Overflow: result magnitude exceeds the representable range of f64\" } } ; f . write_str (s) } }",
+      "reason": "trait-impl of non-prelude trait `Display` — no ambient trait definition and synthetic trait emission is refused (DN-34 §8.8 / DN-122 MVP); gapped the whole impl so the residual cannot file-poison myc-check (G2; express gap-close 2026-07-16)",
+      "item_name": "MathErr"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 150,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "mycelium_std_core :: impl_std_error ! (MathErr) ;",
+      "reason": "item-position macro invocation — no macro system in this grammar",
+      "item_name": null
+    }
+  ],
+  "total_top_level_items": 9
+}

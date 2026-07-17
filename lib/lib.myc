@@ -1,0 +1,110 @@
+// nodule: std.math
+// `std.math` — Ring-2 / Tier-B numeric functions over the honest numerics (M-525).
+//
+// # Summary
+//
+// `std.math` is the ordinary numeric-function surface — `abs`, `min`/`max`, `pow`, `sqrt`, `exp`,
+// `log`, the trigonometrics, rounding — held to the RFC-0016 §4.1 contract (C1–C6).
+//
+// Its **honesty crux** is two-fold:
+//
+// 1. **C2 (VR-5):** every op's guarantee tag is determined by what is *established*, never
+//    pre-claimed. Exact integer/rational ops tag `Exact`; every approximate result carries an
+//    `ErrorBound{eps, norm, basis}` from the `mycelium-numerics` ε kernel (ADR-010) and tags at
+//    that bound's *established* strength — `Proven` **only** where a theorem's side-conditions are
+//    checked, otherwise honestly `Empirical` or `Declared`.
+//
+// 2. **C1 (G2):** every domain restriction (`sqrt` of negative, `log` of zero, division by zero)
+//    is an explicit `Result::Err` — **never** a NaN, Inf, or sentinel.
+//
+// # Architecture
+//
+// Ring 2, Tier B. Adds no trusted code (KC-3): exact ops are pure, total functions over primitive
+// Rust types; approximate ops carry the `Declared` tag because the transcendental compute floor
+// (libm / `wild` FFI) is **deferred** to the `std-sys` phylum (FLAG — see §FLAG below). The
+// `Approx<f64>` carrier is a thin view: a plain `f64` value with its attached `{Bound, strength}`
+// pair (RFC-0001 §4.3 / the `bound.schema.json` projection), **not** a new numeric type and **not**
+// a kernel change (README §5 / math.md §7-Q1 resolved by `numerics`).
+//
+// # FLAG — transcendental compute floor (§8-Q6 / M-541)
+//
+// The approximate ops (`sqrt`, `cbrt`, `exp`, `log`, `logb`, `pow`, `hypot`, `sin`, `cos`, `tan`,
+// `asin`, `acos`, `atan`, `atan2`) delegate to Rust's `f64` intrinsics, which bottom out in the
+// platform libm. This constitutes an unaudited `wild` / FFI floor (ADR-014). Per spec §5-C5 and
+// §8-Q6 (RESOLVED: the audited `wild` floor splits into a separate `std-sys` phylum, M-541), the
+// transcendental floor is **not** an audited `wild` block here — it is the unresolved M-541 work.
+// As a consequence, all approximate ops carry `Declared` strength (not `Proven` or `Empirical`) in
+// this implementation, because no audited theorem with checked side-conditions yet backs the libm
+// calls (VR-5: downgrade to stay honest, never upgrade without a checked basis).
+//
+// # Guarantee matrix
+//
+// Encoded as data in [`GUARANTEE_MATRIX`] and asserted in the test suite — never prose-only
+// (RFC-0016 §4.5).
+//
+// # Contract conformance (RFC-0016 §4.1 C1–C6)
+//
+// - **C1 never-silent (G2):** every domain restriction is an explicit `Err(MathErr::…)` — no
+//   NaN, no ±Inf, no sentinel, no silent clamp.
+// - **C2 honest per-op tag (VR-5):** exact ops tag `Exact`; approximate ops tag `Declared` (the
+//   honest floor for a `wild`/libm-backed compute, pending M-541 auditing).
+// - **C3 no black boxes / EXPLAIN (SC-3/G11):** approximate results carry their `Bound`
+//   inspectable via [`Approx::explain`]; rounding carries its reified [`RoundMode`]; domain
+//   refusals carry a diagnostic string naming the violated restriction.
+// - **C4 value-semantic:** all ops are pure functions of their inputs; results are immutable.
+// - **C5 above the kernel (KC-3):** no `unsafe`, no FFI — the transcendental libm floor is
+//   reached via Rust's own `f64::sqrt` etc., which is not a new `wild` block introduced *here*;
+//   see the FLAG above for the M-541 disposition.
+// - **C6 declared bounded effects:** every op is pure — `effects: none`. No IO, no clock, no
+//   ambient rounding mode, no global state.
+//
+// Design spec: `docs/spec/stdlib/math.md`; task M-525, issue #166.
+//
+// ## Ambient Representation (RFC-0012 §8-Q3)
+//
+// This crate's public API participates in the RFC-0012 ambient-representation contract:
+// the representation choice (binary/ternary/dense/VSA) is implicit at the call site but
+// always reified, queryable, and EXPLAIN-able — never a black box (C3/SC-3).
+// [Declared per RFC-0012; direction accepted in DN-07 §8-Q3; per-ring pass scheduled as M-540.]
+//
+// **For this crate (Ring 2, Tier B):** Math ops tag approximate results `Declared` — not
+// `Proven` — because the transcendental compute floor (libm / `wild` FFI, M-541) is not yet
+// audited. Every approximate result carries an explicit `Bound` (inspectable via
+// [`Approx::explain`]); the precision bound is an explicit declaration, not an implicit
+// guarantee. See §FLAG for the M-541 disposition. [§FLAG: transcendental compute floor pending
+// M-541 `std-sys` audit; strength is `Declared` until the audited theorem is delivered.]
+//
+// # Stability (DN-66 freeze, 2026-07-01)
+//
+// This crate's public API, as documented in `docs/spec/stdlib/math.md` (spec status:
+// Accepted (2026-06-20)) and asserted by its guarantee-matrix table, is the **frozen baseline** per
+// [DN-66](../../../docs/notes/DN-66-Stdlib-Stable-API-Freeze-And-Rust-Crate-Retirement-Status.md).
+// A future breaking change here needs a spec amendment + changelog entry, not a silent edit (G2).
+//
+// **Unfrozen for the gap-closure window (ADR-045, Accepted 2026-07-10):** this DN-66 freeze is
+// lifted per [ADR-045](../../../docs/adr/ADR-045-Kernel-And-Lexicon-Unfreeze-For-Early-Gap-Closure.md)
+// for a bounded window; a breaking change here still needs a spec amendment + changelog entry
+// (G2), not a silent edit — the window closes per the ADR-045 §2.4 re-freeze conditions, bound by
+// the DN-99 residual worklist.
+// It remains the RFC-0031 D6 differential-oracle reference; the same-named `lib/std/math.myc` prototype is a narrower, structurally distinct surface (DN-66 S3.1) — the D6 retirement trigger has not fired, so no item here is `#[deprecated]`.
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule std.math;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: std.math.exact) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type RoundMode = Floor | Ceil | TruncTowardZero | HalfAwayFromZero | HalfToEven;
+
+// The explicit error set for fallible `std.math` ops (spec §3; C1 / G2).
+//
+// Every domain restriction surfaces as one of these variants — **never** as a NaN, ±Inf,
+// sentinel, or silent clamp. The variant name is the EXPLAIN artifact for a refusal (C3).
+pub type MathErr = DivByZero | NegativeDomain | NonPositiveDomain | BadBase | PoleDomain | OutOfDomain | Overflow;
+
+impl Show[MathErr] for MathErr {
+  fn render(x: MathErr) => Bytes =
+    match x { DivByZero => "DivByZero", NegativeDomain => "NegativeDomain", NonPositiveDomain => "NonPositiveDomain", BadBase => "BadBase", PoleDomain => "PoleDomain", OutOfDomain => "OutOfDomain", Overflow => "Overflow" };
+};
+
+fn eq_MathErr(a: MathErr, b: MathErr) => Binary{1} =
+  match a { DivByZero => match b { DivByZero => 0b1, _ => 0b0 }, NegativeDomain => match b { NegativeDomain => 0b1, _ => 0b0 }, NonPositiveDomain => match b { NonPositiveDomain => 0b1, _ => 0b0 }, BadBase => match b { BadBase => 0b1, _ => 0b0 }, PoleDomain => match b { PoleDomain => 0b1, _ => 0b0 }, OutOfDomain => match b { OutOfDomain => 0b1, _ => 0b0 }, Overflow => match b { Overflow => 0b1, _ => 0b0 } };

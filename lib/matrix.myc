@@ -1,0 +1,26 @@
+// nodule: std.math.matrix
+// The `std.math` guarantee matrix — encoded as data, asserted in tests (RFC-0016 §4.5).
+//
+// Every exported op has exactly one row describing:
+// - Its honest guarantee tag on `Exact ⊐ Proven ⊐ Empirical ⊐ Declared`.
+// - Its fallibility and the explicit error set (C1).
+// - Its declared effects (C6 — all are `"none"` here).
+// - Whether it exposes an EXPLAIN artifact (C3).
+//
+// The matrix is the *load-bearing deliverable* of the spec (spec §4 / RFC-0016 §4.5): it is
+// encoded as data so the test suite can assert invariants structurally, not just as prose.
+//
+// # Honesty note on approximate-op tags (VR-5)
+//
+// All approximate ops (`sqrt`, `cbrt`, `exp`, `log`, `logb`, `pow`, `hypot`, `sin`, `cos`, `tan`,
+// `asin`, `acos`, `atan`, `atan2`) carry `Declared` in this implementation because the
+// transcendental compute floor is the platform libm via Rust's `f64` intrinsics — an unaudited
+// `wild` floor (FLAG in lib.rs; M-541 / §8-Q6). When M-541 lands with an audited `std-sys`
+// surface, the relevant ops can be upgraded to `Empirical` (empirically fit bound) or `Proven`
+// (cited theorem with checked side-conditions) — but only with a checked basis (VR-5).
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule std.math.matrix;
+
+

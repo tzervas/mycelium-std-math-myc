@@ -1,0 +1,587 @@
+{
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 31,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_core :: { Bound , BoundBasis , BoundBasis as Basis , BoundKind , GuaranteeStrength , NormKind , } ;",
+      "reason": "`use mycelium_core::Bound` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_core::BoundBasis` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_core::BoundBasis as Basis` — a renamed cross-nodule import is out of this increment's scope (the alias would need threading through every downstream reference to `Basis` in this file's body); flagged, not guessed (VR-5/G2); `use mycelium_core::BoundKind` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_core::GuaranteeStrength` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_core::NormKind` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 37,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "# [doc = \" The ε upper bound used for `Declared`-strength float operations (see module honesty note).\"] # [doc = \"\"] # [doc = \" ε-ownership (math.md §7-Q2 — RESOLVED): the constant is **homed in `std.numerics`** (the\"] # [doc = \" ε-carrier module, M-512) and re-exported here, so the value is stated in exactly one place\"] # [doc = \" (NFR-N2). It is a `UserDeclared` assertion (`2 · f64::EPSILON ≈ 4.44e-16`, Linf) until M-541's\"] # [doc = \" audited libm floor provides a checked `ProvenThm` basis.\"] pub use mycelium_std_numerics :: DECLARED_FLOAT_EPS ;",
+      "reason": "`use mycelium_std_numerics::DECLARED_FLOAT_EPS` — `mycelium_std_numerics` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 45,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" The `Declared` ε bound attached to all approximate ops in this implementation.\"] # [doc = \"\"] # [doc = \" Basis is `UserDeclared` because the libm compute floor is not yet audited (FLAG in lib.rs /\"] # [doc = \" M-541). See [`DECLARED_FLOAT_EPS`] and the module-level honesty note.\"] # [must_use] pub fn declared_error_bound () -> Bound { Bound { kind : BoundKind :: Error { eps : DECLARED_FLOAT_EPS , norm : NormKind :: Linf , } , basis : BoundBasis :: UserDeclared , } }",
+      "reason": "struct literal `Bound { .. }` — not an in-file single-ctor struct or enum struct-variant that emits (no constructor to build; a cross-nodule variant is an honest DN-113/DN-134-OQ-2 resolvability gap, never a fabricated out-of-file reference — VR-5/G2)",
+      "item_name": "declared_error_bound"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 60,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" `Approx<f64>` — a thin carrier for an approximate `f64` result with its attached bound.\"] # [doc = \"\"] # [doc = \" Per spec §3 and the README §5 reconciliation (`math.md §7-Q1`): `Approx<T>` is a plain value\"] # [doc = \" with its `Meta`-attached `{Bound, strength}` — it is **not** a new numeric type and **not** a\"] # [doc = \" kernel change (KC-3). This Rust-first struct holds the scalar and its bound directly (without\"] # [doc = \" a full `Value` wrapper) for ergonomic use in the `std.math` surface.\"] # [doc = \"\"] # [doc = \" The attached `bound` is the EXPLAIN artifact (C3): call [`Approx::explain`] to project it.\"] # [derive (Debug , Clone , PartialEq)] pub struct Approx < T > { # [doc = \" The approximate scalar result.\"] pub value : T , # [doc = \" The attached error bound — the C2/C3 artifact, never dropped.\"] pub bound : Bound , # [doc = \" The honest guarantee strength (derived from `bound.basis`, never asserted; VR-5).\"] # [doc = \"\"] # [doc = \" **Private (the VR-5 seal):** a public field would let a caller write\"] # [doc = \" `Approx { strength: Proven, .. }` and assert a strength the basis doesn't support; keeping\"] # [doc = \" it private means [`Approx::new`] (basis-deriving) is the only way to set it. Read via\"] # [doc = \" [`Approx::strength`].\"] strength : GuaranteeStrength , }",
+      "reason": "struct `Approx` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "Approx"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 83,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" The dual human/machine EXPLAIN record for an [`Approx`] result (G11; C3).\"] # [derive (Debug , Clone , PartialEq)] pub struct ApproxExplain { # [doc = \" The approximate value.\"] pub value : f64 , # [doc = \" The ε bound magnitude.\"] pub eps : f64 , # [doc = \" The norm in which `eps` is expressed.\"] pub norm : NormKind , # [doc = \" The basis that produced this bound.\"] pub basis : BoundBasis , # [doc = \" The honest strength.\"] pub strength : GuaranteeStrength , # [doc = \" Human-readable one-line summary (the G11 human projection).\"] pub summary : String , }",
+      "reason": "struct `ApproxExplain` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "ApproxExplain"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 100,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl < T : Copy + core :: fmt :: Debug > Approx < T > { # [doc = \" Build an `Approx` value. The strength is **derived** from the bound's basis (VR-5 —\"] # [doc = \" never asserted from outside).\"] # [must_use] pub fn new (value : T , bound : Bound) -> Self { let strength = bound . basis . strength () ; Approx { value , bound , strength , } } # [doc = \" The honest guarantee strength (derived from the bound's basis; VR-5 — never asserted).\"] # [must_use] pub fn strength (& self) -> GuaranteeStrength { self . strength } }",
+      "reason": "no member of this impl block could be transpiled (2 sub-issue(s)): impl method `new` body: method call `.strength(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__strength` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `strength(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered); impl method `strength` body: field projection `self.strength` on `Approx[T]` — not an in-file single-ctor struct that emits (an enum / external / non-resolvable type has no constructor to `match` against)",
+      "item_name": "Approx < T >"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 120,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl Approx < f64 > { # [doc = \" Project this approximate result to a dual human/machine EXPLAIN record (G11; C3).\"] # [doc = \"\"] # [doc = \" Total — every `Approx<f64>` carries a bound that explains.\"] # [must_use] pub fn explain (& self) -> ApproxExplain { let (eps , norm) = match self . bound . kind { BoundKind :: Error { eps , norm } => (eps , norm) , _ => (f64 :: INFINITY , NormKind :: Linf) , } ; let basis_desc = match & self . bound . basis { Basis :: ProvenThm { citation } => format ! (\"ProvenThm: {citation}\") , Basis :: EmpiricalFit { trials , method } => { format ! (\"EmpiricalFit ({trials} trials): {method}\") } Basis :: UserDeclared => { \"UserDeclared (unverified — Declared, not Proven; FLAG M-541)\" . to_owned () } } ; let summary = format ! (\"{:?} result {:.6e}; ε={eps:.2e} ({norm:?}); basis={basis_desc}\" , self . strength , self . value) ; ApproxExplain { value : self . value , eps , norm , basis : self . bound . basis . clone () , strength : self . strength , summary , } } }",
+      "reason": "no member of this impl block could be transpiled (1 sub-issue(s)): impl method `explain` body: `let` binding uses an unsupported pattern (only simple `let x = e;` is supported)",
+      "item_name": "Approx < f64 >"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 165,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `sqrt(x)` — approximate square root.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** `x ≥ 0`; `Err(NegativeDomain)` otherwise.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::NegativeDomain`] when `x < 0`.\"] pub fn sqrt (x : f64) -> Result < Approx < f64 > , MathErr > { if x . is_nan () || x < 0.0 { return Err (MathErr :: NegativeDomain) ; } Ok (Approx :: new (x . sqrt () , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "sqrt"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 180,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `cbrt(x)` — approximate cube root.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** finite `f64` (cbrt is odd; no pole).\"] # [doc = \"\"] # [doc = \" Note: `cbrt(NaN) = NaN` and `cbrt(±∞) = ±∞` in IEEE 754; to stay never-silent — and because an\"] # [doc = \" ε bound is meaningless over a non-finite result — this function returns `Err(OutOfDomain)` for\"] # [doc = \" any non-finite input rather than wrapping `NaN`/`±∞` in an `Ok(Approx { .. })` (C1/G2).\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] pub fn cbrt (x : f64) -> Result < Approx < f64 > , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } Ok (Approx :: new (x . cbrt () , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "cbrt"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 199,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `exp(x)` — approximate natural exponential `eˣ`.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** finite `f64`; `Err(Overflow)` if the result would exceed `f64::MAX`.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::Overflow`] when `x` is so large that `eˣ > f64::MAX`.\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN.\"] pub fn exp (x : f64) -> Result < Approx < f64 > , MathErr > { if x . is_nan () { return Err (MathErr :: OutOfDomain) ; } let result = x . exp () ; if result . is_infinite () { return Err (MathErr :: Overflow) ; } Ok (Approx :: new (result , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "exp"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 219,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `log(x)` — approximate natural logarithm `ln(x)`.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** `x > 0`; `Err(NonPositiveDomain)` for `x ≤ 0` or NaN.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::NonPositiveDomain`] when `x ≤ 0` or NaN.\"] pub fn log (x : f64) -> Result < Approx < f64 > , MathErr > { if x . is_nan () || x <= 0.0 { return Err (MathErr :: NonPositiveDomain) ; } Ok (Approx :: new (x . ln () , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "log"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 234,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `logb(b, x)` — approximate base-`b` logarithm `log_b(x)`.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** `x > 0`; `b > 0`, `b ≠ 1`, `b` finite; otherwise explicit errors.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::BadBase`] when `b ≤ 0`, `b == 1`, `b` is NaN, or `b` is infinite.\"] # [doc = \" - [`MathErr::NonPositiveDomain`] when `x ≤ 0` or NaN.\"] pub fn logb (b : f64 , x : f64) -> Result < Approx < f64 > , MathErr > { if b . is_nan () || b . is_infinite () || b <= 0.0 { return Err (MathErr :: BadBase) ; } if x . is_nan () || x <= 0.0 { return Err (MathErr :: NonPositiveDomain) ; } let ln_b = b . ln () ; if ln_b == 0.0 { return Err (MathErr :: BadBase) ; } Ok (Approx :: new (x . ln () / ln_b , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "logb"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 263,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `pow(x, y)` — approximate `xʸ`.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \"\"] # [doc = \" **Domain restrictions:**\"] # [doc = \" - `0^neg` — `x == 0` with `y < 0`: `Err(DivByZero)`.\"] # [doc = \" - `neg^non-integer` — `x < 0` with a non-integer `y`: `Err(OutOfDomain)`.\"] # [doc = \" - Overflow: result overflows `f64::MAX`: `Err(Overflow)`.\"] # [doc = \" - NaN `x` or `y`: `Err(OutOfDomain)`.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::DivByZero`] when `x == 0` and `y < 0`.\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x < 0` and `y` is not an integer, or input is NaN.\"] # [doc = \" - [`MathErr::Overflow`] when the result overflows `f64::MAX`.\"] pub fn pow (x : f64 , y : f64) -> Result < Approx < f64 > , MathErr > { if x . is_nan () || y . is_nan () { return Err (MathErr :: OutOfDomain) ; } if x == 0.0 && y < 0.0 { return Err (MathErr :: DivByZero) ; } if x < 0.0 && y . fract () != 0.0 { return Err (MathErr :: OutOfDomain) ; } let result = x . powf (y) ; if result . is_infinite () { return Err (MathErr :: Overflow) ; } Ok (Approx :: new (result , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "pow"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 295,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `hypot(x, y)` — approximate `√(x² + y²)`.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** total on all finite `f64`; `Err(Overflow)` if the result overflows.\"] # [doc = \" NaN inputs return `Err(OutOfDomain)`.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when either `x` or `y` is NaN.\"] # [doc = \" - [`MathErr::Overflow`] when the result overflows `f64::MAX`.\"] pub fn hypot (x : f64 , y : f64) -> Result < Approx < f64 > , MathErr > { if x . is_nan () || y . is_nan () { return Err (MathErr :: OutOfDomain) ; } let result = x . hypot (y) ; if result . is_infinite () { return Err (MathErr :: Overflow) ; } Ok (Approx :: new (result , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "hypot"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 316,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `sin(x)` — approximate sine.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** total on all finite `f64` (sin is entire); NaN input returns `Err(OutOfDomain)`.\"] # [doc = \"\"] # [doc = \" Note: `sin(+Inf)` / `sin(-Inf)` are undefined in IEEE 754; they are rejected as `OutOfDomain`\"] # [doc = \" to stay never-silent (C1/G2).\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] pub fn sin (x : f64) -> Result < Approx < f64 > , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } Ok (Approx :: new (x . sin () , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "sin"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 334,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `cos(x)` — approximate cosine.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** total on all finite `f64`; NaN or infinite input returns `Err(OutOfDomain)`.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] pub fn cos (x : f64) -> Result < Approx < f64 > , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } Ok (Approx :: new (x . cos () , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "cos"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 349,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `tan(x)` — approximate tangent.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** finite `f64` that is not at a pole (odd multiple of π/2).\"] # [doc = \"\"] # [doc = \" Detecting poles exactly is numerically impossible for arbitrary `f64` inputs, because `π/2` is\"] # [doc = \" irrational and cannot be represented exactly. The spec acknowledges this: `Err(PoleDomain)` is\"] # [doc = \" returned when `|tan(x)| > 1/f64::EPSILON` (effectively ±∞ in f64 arithmetic), which is the\"] # [doc = \" machine-observable pole indicator. NaN or infinite inputs are `Err(OutOfDomain)`.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] # [doc = \" - [`MathErr::PoleDomain`] when `|tan(x)| > 1/f64::EPSILON` (observable pole).\"] pub fn tan (x : f64) -> Result < Approx < f64 > , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } let result = x . tan () ; if result . is_infinite () || result . abs () > 1.0 / f64 :: EPSILON { return Err (MathErr :: PoleDomain) ; } Ok (Approx :: new (result , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "tan"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 375,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `asin(x)` — approximate arcsine.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** `|x| ≤ 1`; `Err(OutOfDomain)` when `|x| > 1` or NaN.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or `|x| > 1`.\"] pub fn asin (x : f64) -> Result < Approx < f64 > , MathErr > { if x . is_nan () || x . abs () > 1.0 { return Err (MathErr :: OutOfDomain) ; } Ok (Approx :: new (x . asin () , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "asin"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 390,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `acos(x)` — approximate arccosine.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** `|x| ≤ 1`; `Err(OutOfDomain)` when `|x| > 1` or NaN.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or `|x| > 1`.\"] pub fn acos (x : f64) -> Result < Approx < f64 > , MathErr > { if x . is_nan () || x . abs () > 1.0 { return Err (MathErr :: OutOfDomain) ; } Ok (Approx :: new (x . acos () , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "acos"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 405,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `atan(x)` — approximate arctangent.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** total on all finite `f64`; NaN or infinite input returns `Err(OutOfDomain)`.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] pub fn atan (x : f64) -> Result < Approx < f64 > , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } Ok (Approx :: new (x . atan () , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "atan"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 420,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `atan2(y, x)` — approximate four-quadrant arctangent.\"] # [doc = \"\"] # [doc = \" **Guarantee:** `Declared` (ε = 2·f64::EPSILON, Linf; `UserDeclared` basis — libm floor, M-541).\"] # [doc = \" **Domain:** `(y, x) ≠ (0, 0)` and both must be finite; `Err(OutOfDomain)` for NaN/infinite\"] # [doc = \" input, `Err(Undefined)` at the origin `(0, 0)` where atan2 is mathematically undefined.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `y` or `x` is NaN or infinite.\"] # [doc = \" - [`MathErr::PoleDomain`] when `y == 0` and `x == 0` (origin — undefined).\"] pub fn atan2 (y : f64 , x : f64) -> Result < Approx < f64 > , MathErr > { if ! y . is_finite () || ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } if y == 0.0 && x == 0.0 { return Err (MathErr :: PoleDomain) ; } Ok (Approx :: new (y . atan2 (x) , declared_error_bound ())) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "atan2"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "line": 440,
+      "col": 1,
+      "category": "TestItem",
+      "rust_construct": "TestItem",
+      "snippet": "# [cfg (test)] mod tests { use super :: * ; use mycelium_core :: BoundBasis ; fn assert_declared (a : & Approx < f64 >) { assert_eq ! (a . strength () , GuaranteeStrength :: Declared , \"approximate ops must carry Declared strength (VR-5: libm floor not audited, FLAG M-541)\") ; assert ! (matches ! (a . bound . basis , BoundBasis :: UserDeclared) , \"basis must be UserDeclared for unaudited libm ops\") ; if let BoundKind :: Error { eps , norm } = a . bound . kind { assert ! (eps >= 0.0 , \"ε must be non-negative\") ; assert ! (eps . is_finite () , \"ε must be finite\") ; assert_eq ! (norm , NormKind :: Linf , \"norm must be Linf\") ; } else { panic ! (\"expected Error bound kind\") ; } } # [test] fn sqrt_carries_declared_bound () { for x in [0.0 , 1.0 , 4.0 , 100.0 , f64 :: MAX . sqrt ()] { let a = sqrt (x) . unwrap_or_else (| e | panic ! (\"sqrt({x}) failed: {e}\")) ; assert_declared (& a) ; } } # [test] fn cbrt_carries_declared_bound () { for x in [- 8.0 , - 1.0 , 0.0 , 1.0 , 27.0] { let a = cbrt (x) . unwrap_or_else (| e | panic ! (\"cbrt({x}) failed: {e}\")) ; assert_declared (& a) ; } } # [test] fn exp_carries_declared_bound () { for x in [- 100.0 , - 1.0 , 0.0 , 1.0 , 10.0] { let a = exp (x) . unwrap_or_else (| e | panic ! (\"exp({x}) failed: {e}\")) ; assert_declared (& a) ; } } # [test] fn log_carries_declared_bound () { for x in [f64 :: MIN_POSITIVE , 1.0 , 2.0 , 100.0] { let a = log (x) . unwrap_or_else (| e | panic ! (\"log({x}) failed: {e}\")) ; assert_declared (& a) ; } } # [test] fn trig_carries_declared_bound () { for x in [- 1.0 , 0.0 , 1.0 , 0.5 , - 0.5] { assert_declared (& sin (x) . unwrap ()) ; assert_declared (& cos (x) . unwrap ()) ; } } # [test] fn inverse_trig_carries_declared_bound () { for x in [- 1.0 , - 0.5 , 0.0 , 0.5 , 1.0] { assert_declared (& asin (x) . unwrap ()) ; assert_declared (& acos (x) . unwrap ()) ; } for x in [- 1.0 , 0.0 , 1.0] { assert_declared (& atan (x) . unwrap ()) ; } } # [test] fn atan2_carries_declared_bound () { assert_declared (& atan2 (1.0 , 1.0) . unwrap ()) ; assert_declared (& atan2 (0.0 , 1.0) . unwrap ()) ; } # [test] fn hypot_carries_declared_bound () { assert_declared (& hypot (3.0 , 4.0) . unwrap ()) ; } # [test] fn all_approx_ops_have_nonneg_finite_eps () { let ops : Vec < (& str , Approx < f64 >) > = vec ! [(\"sqrt(4)\" , sqrt (4.0) . unwrap ()) , (\"cbrt(8)\" , cbrt (8.0) . unwrap ()) , (\"exp(1)\" , exp (1.0) . unwrap ()) , (\"log(1)\" , log (1.0) . unwrap ()) , (\"logb(2,8)\" , logb (2.0 , 8.0) . unwrap ()) , (\"pow(2,3)\" , pow (2.0 , 3.0) . unwrap ()) , (\"hypot(3,4)\" , hypot (3.0 , 4.0) . unwrap ()) , (\"sin(1)\" , sin (1.0) . unwrap ()) , (\"cos(1)\" , cos (1.0) . unwrap ()) , (\"tan(0)\" , tan (0.0) . unwrap ()) , (\"asin(0)\" , asin (0.0) . unwrap ()) , (\"acos(0)\" , acos (0.0) . unwrap ()) , (\"atan(1)\" , atan (1.0) . unwrap ()) , (\"atan2(1,1)\" , atan2 (1.0 , 1.0) . unwrap ()) ,] ; for (name , a) in & ops { if let BoundKind :: Error { eps , .. } = a . bound . kind { assert ! (eps >= 0.0 && eps . is_finite () , \"{name}: ε must be non-negative and finite, got {eps}\") ; } } } # [test] fn sqrt_negative_is_explicit_error () { assert_eq ! (sqrt (- 1.0) , Err (MathErr :: NegativeDomain)) ; assert_eq ! (sqrt (f64 :: NAN) , Err (MathErr :: NegativeDomain)) ; } # [test] fn cbrt_nan_is_explicit_error () { assert_eq ! (cbrt (f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; } # [test] fn exp_overflow_is_explicit_error () { assert_eq ! (exp (1000.0) , Err (MathErr :: Overflow)) ; } # [test] fn exp_nan_is_explicit_error () { assert_eq ! (exp (f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; } # [test] fn log_nonpositive_is_explicit_error () { assert_eq ! (log (0.0) , Err (MathErr :: NonPositiveDomain)) ; assert_eq ! (log (- 1.0) , Err (MathErr :: NonPositiveDomain)) ; assert_eq ! (log (f64 :: NAN) , Err (MathErr :: NonPositiveDomain)) ; } # [test] fn logb_bad_base_is_explicit_error () { assert_eq ! (logb (0.0 , 1.0) , Err (MathErr :: BadBase)) ; assert_eq ! (logb (- 1.0 , 1.0) , Err (MathErr :: BadBase)) ; assert_eq ! (logb (1.0 , 1.0) , Err (MathErr :: BadBase)) ; assert_eq ! (logb (f64 :: NAN , 1.0) , Err (MathErr :: BadBase)) ; assert_eq ! (logb (f64 :: INFINITY , 1.0) , Err (MathErr :: BadBase)) ; } # [doc = \" Only base **exactly** 1.0 is degenerate; bases adjacent to 1 have a tiny-but-nonzero `ln`\"] # [doc = \" and are valid. The old fuzzy `(b-1).abs() < EPSILON` guard wrongly rejected these.\"] # [test] fn logb_bases_adjacent_to_one_are_valid () { let below = 1.0_f64 . next_down () ; let above = 1.0_f64 . next_up () ; assert ! (logb (below , 8.0) . is_ok () , \"base just below 1 is a valid base\") ; assert ! (logb (above , 8.0) . is_ok () , \"base just above 1 is a valid base\") ; } # [test] fn logb_nonpositive_x_is_explicit_error () { assert_eq ! (logb (2.0 , 0.0) , Err (MathErr :: NonPositiveDomain)) ; assert_eq ! (logb (2.0 , - 1.0) , Err (MathErr :: NonPositiveDomain)) ; } # [test] fn pow_zero_negative_exponent_is_div_by_zero () { assert_eq ! (pow (0.0 , - 1.0) , Err (MathErr :: DivByZero)) ; } # [test] fn pow_negative_base_fractional_exponent_is_out_of_domain () { assert_eq ! (pow (- 2.0 , 0.5) , Err (MathErr :: OutOfDomain)) ; } # [test] fn pow_overflow_is_explicit_error () { assert_eq ! (pow (f64 :: MAX , 2.0) , Err (MathErr :: Overflow)) ; } # [test] fn pow_nan_is_out_of_domain () { assert_eq ! (pow (f64 :: NAN , 1.0) , Err (MathErr :: OutOfDomain)) ; assert_eq ! (pow (1.0 , f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; } # [test] fn hypot_nan_is_explicit_error () { assert_eq ! (hypot (f64 :: NAN , 1.0) , Err (MathErr :: OutOfDomain)) ; } # [test] fn sin_nan_or_inf_is_explicit_error () { assert_eq ! (sin (f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; assert_eq ! (sin (f64 :: INFINITY) , Err (MathErr :: OutOfDomain)) ; } # [test] fn cos_nan_or_inf_is_explicit_error () { assert_eq ! (cos (f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; assert_eq ! (cos (f64 :: NEG_INFINITY) , Err (MathErr :: OutOfDomain)) ; } # [test] fn tan_nan_or_inf_is_explicit_error () { assert_eq ! (tan (f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; assert_eq ! (tan (f64 :: INFINITY) , Err (MathErr :: OutOfDomain)) ; } # [test] fn asin_out_of_domain_is_explicit_error () { assert_eq ! (asin (1.5) , Err (MathErr :: OutOfDomain)) ; assert_eq ! (asin (- 1.5) , Err (MathErr :: OutOfDomain)) ; assert_eq ! (asin (f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; } # [test] fn acos_out_of_domain_is_explicit_error () { assert_eq ! (acos (1.5) , Err (MathErr :: OutOfDomain)) ; assert_eq ! (acos (- 1.5) , Err (MathErr :: OutOfDomain)) ; } # [test] fn atan_nan_or_inf_is_explicit_error () { assert_eq ! (atan (f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; assert_eq ! (atan (f64 :: INFINITY) , Err (MathErr :: OutOfDomain)) ; } # [test] fn atan2_origin_is_pole () { assert_eq ! (atan2 (0.0 , 0.0) , Err (MathErr :: PoleDomain)) ; } # [test] fn atan2_nan_is_explicit_error () { assert_eq ! (atan2 (f64 :: NAN , 1.0) , Err (MathErr :: OutOfDomain)) ; } # [test] fn approx_explain_is_total_and_informative () { let a = sqrt (9.0) . expect (\"sqrt(9) is valid\") ; let ex = a . explain () ; assert ! (! ex . summary . is_empty () , \"explain summary must be non-empty\") ; assert_eq ! (ex . norm , NormKind :: Linf) ; assert ! (ex . eps >= 0.0) ; assert ! (ex . summary . contains (\"Declared\") , \"summary should mention Declared strength\") ; assert ! (ex . summary . contains (\"FLAG\") , \"summary should mention the M-541 FLAG\") ; } # [test] fn sqrt_4_is_2 () { let a = sqrt (4.0) . unwrap () ; assert ! ((a . value - 2.0) . abs () < 1e-10 , \"sqrt(4) ≈ 2, got {}\" , a . value) ; } # [test] fn exp_0_is_1 () { let a = exp (0.0) . unwrap () ; assert ! ((a . value - 1.0) . abs () < 1e-10 , \"exp(0) = 1, got {}\" , a . value) ; } # [test] fn log_e_is_1 () { let a = log (std :: f64 :: consts :: E) . unwrap () ; assert ! ((a . value - 1.0) . abs () < 1e-10 , \"log(e) = 1, got {}\" , a . value) ; } # [test] fn sin_0_is_0 () { let a = sin (0.0) . unwrap () ; assert ! (a . value . abs () < 1e-15 , \"sin(0) = 0, got {}\" , a . value) ; } # [test] fn cos_0_is_1 () { let a = cos (0.0) . unwrap () ; assert ! ((a . value - 1.0) . abs () < 1e-15 , \"cos(0) = 1, got {}\" , a . value) ; } # [test] fn hypot_3_4_is_5 () { let a = hypot (3.0 , 4.0) . unwrap () ; assert ! ((a . value - 5.0) . abs () < 1e-10 , \"hypot(3,4) = 5, got {}\" , a . value) ; } # [test] fn logb_base2_of_8_is_3 () { let a = logb (2.0 , 8.0) . unwrap () ; assert ! ((a . value - 3.0) . abs () < 1e-10 , \"logb(2,8) = 3, got {}\" , a . value) ; } }",
+      "reason": "#[cfg(test)] item — out of scope for this PoC's transpilation surface (excluded from the expressible-fraction denominator, but recorded, never silently skipped)",
+      "item_name": "tests"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 24,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The reified rounding mode for [`round`] (spec §3; C3 / SC-3 / G11).\"] # [doc = \"\"] # [doc = \" The mode is a **required** argument — never a hidden ambient default. Each variant is an\"] # [doc = \" inspectable, named specification of the rounding operation. The EXPLAIN artifact for a\"] # [doc = \" `round` call is the `RoundMode` value itself plus the resulting integer.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum RoundMode { # [doc = \" Round toward negative infinity (floor): `⌊x⌋`.\"] Floor , # [doc = \" Round toward positive infinity (ceiling): `⌈x⌉`.\"] Ceil , # [doc = \" Round toward zero (truncation): `trunc(x)`.\"] TruncTowardZero , # [doc = \" Round half away from zero: the common \\\"round half up\\\" for positive numbers.\"] HalfAwayFromZero , # [doc = \" Round half to even (banker's rounding): the IEEE 754 default.\"] HalfToEven , }",
+      "reason": "enum `RoundMode` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "RoundMode"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 24,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The reified rounding mode for [`round`] (spec §3; C3 / SC-3 / G11).\"] # [doc = \"\"] # [doc = \" The mode is a **required** argument — never a hidden ambient default. Each variant is an\"] # [doc = \" inspectable, named specification of the rounding operation. The EXPLAIN artifact for a\"] # [doc = \" `round` call is the `RoundMode` value itself plus the resulting integer.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum RoundMode { # [doc = \" Round toward negative infinity (floor): `⌊x⌋`.\"] Floor , # [doc = \" Round toward positive infinity (ceiling): `⌈x⌉`.\"] Ceil , # [doc = \" Round toward zero (truncation): `trunc(x)`.\"] TruncTowardZero , # [doc = \" Round half away from zero: the common \\\"round half up\\\" for positive numbers.\"] HalfAwayFromZero , # [doc = \" Round half to even (banker's rounding): the IEEE 754 default.\"] HalfToEven , }",
+      "reason": "enum `RoundMode` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "RoundMode"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 24,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The reified rounding mode for [`round`] (spec §3; C3 / SC-3 / G11).\"] # [doc = \"\"] # [doc = \" The mode is a **required** argument — never a hidden ambient default. Each variant is an\"] # [doc = \" inspectable, named specification of the rounding operation. The EXPLAIN artifact for a\"] # [doc = \" `round` call is the `RoundMode` value itself plus the resulting integer.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum RoundMode { # [doc = \" Round toward negative infinity (floor): `⌊x⌋`.\"] Floor , # [doc = \" Round toward positive infinity (ceiling): `⌈x⌉`.\"] Ceil , # [doc = \" Round toward zero (truncation): `trunc(x)`.\"] TruncTowardZero , # [doc = \" Round half away from zero: the common \\\"round half up\\\" for positive numbers.\"] HalfAwayFromZero , # [doc = \" Round half to even (banker's rounding): the IEEE 754 default.\"] HalfToEven , }",
+      "reason": "enum `RoundMode` derive(Eq): covered by co-occurring PartialEq → `fn eq_RoundMode` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "RoundMode"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 43,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" Convert an integral-valued finite `f64` to `i64`, refusing values outside the\"] # [doc = \" exactly-representable `i64` range (C1 — never a silent saturation/truncation).\"] # [doc = \"\"] # [doc = \" Rust's `f64 as i64` *saturates* (since 1.45): `1e20_f64 as i64 == i64::MAX`. A finite\"] # [doc = \" `f64` therefore passes `is_finite()` yet maps to a wrong, silent value. We reject it.\"] # [doc = \" `i64::MIN` is exactly representable as `f64` (`-2^63`); `i64::MAX` is **not** (it rounds\"] # [doc = \" to `2^63`), so the honest upper bound is \\\"strictly below `2^63`\\\".\"] fn checked_round_to_i64 (r : f64) -> Result < i64 , MathErr > { const I64_MIN_F64 : f64 = - 9_223_372_036_854_775_808.0 ; const TWO_POW_63 : f64 = 9_223_372_036_854_775_808.0 ; if ! (I64_MIN_F64 .. TWO_POW_63) . contains (& r) { return Err (MathErr :: Overflow) ; } Ok (r as i64) }",
+      "reason": "function body contains a nested item declaration (e.g. a local `static`/`const`/`fn`) — this grammar fragment has no local-item production; only simple `let x = e;` bindings plus a trailing expression map",
+      "item_name": "checked_round_to_i64"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 59,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `floor(x)` — round toward negative infinity (exact under the `Floor` mode).\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`** — the floor of an in-range finite `f64` is representable and exact.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] # [doc = \" - [`MathErr::Overflow`] when `floor(x)` lies outside the `i64` range (never a silent clamp).\"] pub fn floor (x : f64) -> Result < i64 , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } checked_round_to_i64 (x . floor ()) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "floor"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 74,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `ceil(x)` — round toward positive infinity (exact under the `Ceil` mode).\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`** — the ceiling of a finite `f64` is always representable and exact.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] # [doc = \" - [`MathErr::Overflow`] when `ceil(x)` lies outside the `i64` range (never a silent clamp).\"] pub fn ceil (x : f64) -> Result < i64 , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } checked_round_to_i64 (x . ceil ()) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "ceil"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 89,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `trunc(x)` — round toward zero (exact under the `TruncTowardZero` mode).\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`** — the integer truncation of a finite `f64` is exact.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] # [doc = \" - [`MathErr::Overflow`] when `trunc(x)` lies outside the `i64` range (never a silent clamp).\"] pub fn trunc (x : f64) -> Result < i64 , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } checked_round_to_i64 (x . trunc ()) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "trunc"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 104,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `round(x, mode)` — round `x` to the nearest integer under the named, reified [`RoundMode`].\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`** — the rounded value is the exact image of `x` under `mode`. The mode is\"] # [doc = \" the EXPLAIN artifact (C3): it is required, named, and inspectable — never a hidden default.\"] # [doc = \"\"] # [doc = \" Returns the integer result (as `i64`) and the `RoundMode` applied, so callers can EXPLAIN the\"] # [doc = \" rounding decision.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::OutOfDomain`] when `x` is NaN or infinite.\"] # [doc = \" - [`MathErr::Overflow`] when the rounded value lies outside the `i64` range (never a clamp).\"] pub fn round (x : f64 , mode : RoundMode) -> Result < (i64 , RoundMode) , MathErr > { if ! x . is_finite () { return Err (MathErr :: OutOfDomain) ; } let rounded = match mode { RoundMode :: Floor => x . floor () , RoundMode :: Ceil => x . ceil () , RoundMode :: TruncTowardZero => x . trunc () , RoundMode :: HalfAwayFromZero => { x . round () } RoundMode :: HalfToEven => { let frac = x - x . trunc () ; let is_half = frac . abs () == 0.5 ; if is_half { let t = x . trunc () as i64 ; if t % 2 == 0 { x . trunc () } else if x > 0.0 { x . trunc () + 1.0 } else { x . trunc () - 1.0 } } else { x . round () } } } ; Ok ((checked_round_to_i64 (rounded) ? , mode)) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "round"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 154,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" `abs(x)` — absolute value of a signed integer.\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`, total.**\"] # [doc = \" Note: `i64::MIN.abs()` would overflow (i64::MIN = -2^63, but i64::MAX = 2^63-1). This returns\"] # [doc = \" `i64::MIN` unchanged (two's complement wrapping), which is the Rust `i64::abs` behavior in\"] # [doc = \" debug mode panics. To stay never-silent (C1/G2), this function detects overflow and returns\"] # [doc = \" `Err(Overflow)`.\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::Overflow`] when `x == i64::MIN` (the only overflow case for `abs` on `i64`).\"] pub fn abs (x : i64) -> Result < i64 , MathErr > { x . checked_abs () . ok_or (MathErr :: Overflow) }",
+      "reason": "method call `.ok_or(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__ok_or` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `ok_or(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "abs"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 169,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" `neg(x)` — negation of a signed integer.\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`; fallible at `i64::MIN`.**\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::Overflow`] when `x == i64::MIN`.\"] pub fn neg (x : i64) -> Result < i64 , MathErr > { x . checked_neg () . ok_or (MathErr :: Overflow) }",
+      "reason": "method call `.ok_or(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__ok_or` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `ok_or(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "neg"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 180,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" `signum(x)` — signum of a signed integer: -1, 0, or 1.\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`, total.**\"] # [must_use] pub fn signum (x : i64) -> i64 { x . signum () }",
+      "reason": "method call `.signum(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__signum` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `signum(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "signum"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 188,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" `min(a, b)` — minimum of two signed integers.\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`, total.**\"] # [doc = \"\"] # [doc = \" Tie rule: when `a == b`, returns `a` (the first argument). This is documented, stable, and\"] # [doc = \" never a silent loss of which input won (C1).\"] # [must_use] pub fn min (a : i64 , b : i64) -> i64 { if a <= b { a } else { b } }",
+      "reason": "dropped non-doc attribute(s) on fn `min`: # [must_use]",
+      "item_name": "min"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 203,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" `max(a, b)` — maximum of two signed integers.\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`, total.**\"] # [doc = \"\"] # [doc = \" Tie rule: when `a == b`, returns `a` (the first argument). Documented and stable (C1).\"] # [must_use] pub fn max (a : i64 , b : i64) -> i64 { if a >= b { a } else { b } }",
+      "reason": "dropped non-doc attribute(s) on fn `max`: # [must_use]",
+      "item_name": "max"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 217,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" `gcd(a, b)` — greatest common divisor (always non-negative).\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`; fallible on overflow.** Uses the binary GCD (Stein's algorithm) on the\"] # [doc = \" absolute values. `gcd(0, 0) = 0` (conventional).\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::Overflow`] when the true gcd is `2^63` — i.e. when both inputs are drawn from\"] # [doc = \"   `{0, i64::MIN}` with at least one `i64::MIN` (e.g. `gcd(0, i64::MIN)`). `|i64::MIN| = 2^63`\"] # [doc = \"   is not representable in `i64`, so it is refused rather than wrapped to a negative value (C1).\"] pub fn gcd (a : i64 , b : i64) -> Result < i64 , MathErr > { let mut a = a . unsigned_abs () ; let mut b = b . unsigned_abs () ; let result : u64 = if a == 0 { b } else if b == 0 { a } else { let shift = (a | b) . trailing_zeros () ; a >>= a . trailing_zeros () ; loop { b >>= b . trailing_zeros () ; if a > b { core :: mem :: swap (& mut a , & mut b) ; } b -= a ; if b == 0 { break ; } } a << shift } ; i64 :: try_from (result) . map_err (| _ | MathErr :: Overflow) }",
+      "reason": "method call `.unsigned_abs(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__unsigned_abs` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `unsigned_abs(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "gcd"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 255,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `lcm(a, b)` — least common multiple (always non-negative).\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`; fallible on overflow.**\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::Overflow`] when the result overflows `i64`.\"] pub fn lcm (a : i64 , b : i64) -> Result < i64 , MathErr > { if a == 0 || b == 0 { return Ok (0) ; } let g = gcd (a , b) ? ; let a_abs = a . unsigned_abs () ; let b_abs = b . unsigned_abs () ; let g_u = g as u64 ; let half = a_abs / g_u ; let product = half . checked_mul (b_abs) . ok_or (MathErr :: Overflow) ? ; if product > i64 :: MAX as u64 { return Err (MathErr :: Overflow) ; } Ok (product as i64) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "lcm"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 280,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `checked_div(a, b)` — exact integer division.\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`; `Err(DivByZero)` when `b == 0`.**\"] # [doc = \"\"] # [doc = \" Also returns `Err(Overflow)` for `i64::MIN / -1` (the only overflow case for i64 division).\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::DivByZero`] when `b == 0`.\"] # [doc = \" - [`MathErr::Overflow`] when `a == i64::MIN` and `b == -1`.\"] pub fn checked_div (a : i64 , b : i64) -> Result < i64 , MathErr > { if b == 0 { return Err (MathErr :: DivByZero) ; } a . checked_div (b) . ok_or (MathErr :: Overflow) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "checked_div"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 297,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `checked_rem(a, b)` — exact integer remainder (`a mod b`, truncated toward zero).\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`; `Err(DivByZero)` when `b == 0`.**\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::DivByZero`] when `b == 0`.\"] # [doc = \" - [`MathErr::Overflow`] when `a == i64::MIN` and `b == -1`.\"] pub fn checked_rem (a : i64 , b : i64) -> Result < i64 , MathErr > { if b == 0 { return Err (MathErr :: DivByZero) ; } a . checked_rem (b) . ok_or (MathErr :: Overflow) }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "checked_rem"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 312,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" `ratio(a, b)` — exact rational representation of `a/b`.\"] # [doc = \"\"] # [doc = \" Returns a pair `(numerator, denominator)` in reduced form (the denominator is always positive).\"] # [doc = \" When `b == 0`, returns `Err(DivByZero)`.\"] # [doc = \"\"] # [doc = \" **Guarantee: `Exact`; `Err(DivByZero)` when `b == 0`.**\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \"\"] # [doc = \" - [`MathErr::DivByZero`] when `b == 0`.\"] # [doc = \" - [`MathErr::Overflow`] when reducing/canonicalizing would leave a non-representable value\"] # [doc = \"   (e.g. `ratio(i64::MIN, -1) = 2^63`); refused rather than wrapped (C1).\"] pub fn ratio (a : i64 , b : i64) -> Result < (i64 , i64) , MathErr > { if b == 0 { return Err (MathErr :: DivByZero) ; } let g = gcd (a , b) ? ; let (num , den) = if g == 0 { (a , b) } else { (a / g , b / g) } ; if den < 0 { Ok ((num . checked_neg () . ok_or (MathErr :: Overflow) ? , den . checked_neg () . ok_or (MathErr :: Overflow) ? ,)) } else { Ok ((num , den)) } }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "ratio"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "line": 343,
+      "col": 1,
+      "category": "TestItem",
+      "rust_construct": "TestItem",
+      "snippet": "# [cfg (test)] mod tests { use super :: * ; # [test] fn min_tie_returns_first_arg () { assert_eq ! (min (5 , 5) , 5) ; assert_eq ! (min (- 3 , - 3) , - 3) ; assert_eq ! (min (0 , 0) , 0) ; } # [test] fn max_tie_returns_first_arg () { assert_eq ! (max (7 , 7) , 7) ; assert_eq ! (max (- 1 , - 1) , - 1) ; } # [test] fn min_selects_smaller () { assert_eq ! (min (3 , 5) , 3) ; assert_eq ! (min (- 5 , - 3) , - 5) ; assert_eq ! (min (0 , 1) , 0) ; } # [test] fn max_selects_larger () { assert_eq ! (max (3 , 5) , 5) ; assert_eq ! (max (- 5 , - 3) , - 3) ; } # [test] fn abs_is_exact_for_normal_values () { for x in [0i64 , 1 , - 1 , 100 , - 100 , i64 :: MAX , i64 :: MIN + 1] { let expected = if x >= 0 { x } else { - x } ; assert_eq ! (abs (x) . unwrap () , expected , \"abs({x})\") ; } } # [test] fn abs_min_i64_is_overflow_not_silent () { assert_eq ! (abs (i64 :: MIN) , Err (MathErr :: Overflow)) ; } # [test] fn neg_min_i64_is_overflow () { assert_eq ! (neg (i64 :: MIN) , Err (MathErr :: Overflow)) ; } # [test] fn signum_covers_all_cases () { assert_eq ! (signum (0) , 0) ; assert_eq ! (signum (42) , 1) ; assert_eq ! (signum (- 42) , - 1) ; assert_eq ! (signum (i64 :: MAX) , 1) ; assert_eq ! (signum (i64 :: MIN) , - 1) ; } # [test] fn gcd_divides_both_arguments () { let cases = [(12i64 , 8i64) , (35 , 14) , (100 , 75) , (17 , 13) , (0 , 5) , (5 , 0)] ; for (a , b) in cases { let g = gcd (a , b) . expect (\"in-range gcd\") ; if a != 0 { assert_eq ! (a % g , 0 , \"gcd({a},{b})={g} must divide {a}\") ; } if b != 0 { assert_eq ! (b % g , 0 , \"gcd({a},{b})={g} must divide {b}\") ; } } } # [test] fn gcd_zero_zero_is_zero () { assert_eq ! (gcd (0 , 0) . unwrap () , 0) ; } # [test] fn gcd_known_values () { assert_eq ! (gcd (12 , 8) . unwrap () , 4) ; assert_eq ! (gcd (35 , 14) . unwrap () , 7) ; assert_eq ! (gcd (17 , 13) . unwrap () , 1) ; assert_eq ! (gcd (0 , 5) . unwrap () , 5) ; assert_eq ! (gcd (5 , 0) . unwrap () , 5) ; } # [test] fn gcd_i64_min_overflow_is_explicit_error () { assert_eq ! (gcd (0 , i64 :: MIN) , Err (MathErr :: Overflow)) ; assert_eq ! (gcd (i64 :: MIN , 0) , Err (MathErr :: Overflow)) ; assert_eq ! (gcd (i64 :: MIN , i64 :: MIN) , Err (MathErr :: Overflow)) ; assert_eq ! (gcd (i64 :: MIN , 6) . unwrap () , 2) ; } # [test] fn lcm_known_values () { assert_eq ! (lcm (4 , 6) . unwrap () , 12) ; assert_eq ! (lcm (3 , 7) . unwrap () , 21) ; assert_eq ! (lcm (0 , 5) . unwrap () , 0) ; assert_eq ! (lcm (5 , 0) . unwrap () , 0) ; } # [test] fn lcm_overflow_is_explicit_error () { assert_eq ! (lcm (i64 :: MAX , 2) , Err (MathErr :: Overflow)) ; } # [test] fn checked_div_exact_cases () { assert_eq ! (checked_div (10 , 3) . unwrap () , 3) ; assert_eq ! (checked_div (- 10 , 3) . unwrap () , - 3) ; assert_eq ! (checked_div (10 , - 3) . unwrap () , - 3) ; assert_eq ! (checked_div (9 , 3) . unwrap () , 3) ; } # [test] fn checked_div_zero_divisor_is_explicit_error () { assert_eq ! (checked_div (10 , 0) , Err (MathErr :: DivByZero)) ; assert_eq ! (checked_div (0 , 0) , Err (MathErr :: DivByZero)) ; } # [test] fn checked_rem_zero_divisor_is_explicit_error () { assert_eq ! (checked_rem (10 , 0) , Err (MathErr :: DivByZero)) ; } # [test] fn checked_rem_exact_cases () { assert_eq ! (checked_rem (10 , 3) . unwrap () , 1) ; assert_eq ! (checked_rem (- 10 , 3) . unwrap () , - 1) ; } # [test] fn ratio_reduced_form () { assert_eq ! (ratio (6 , 4) . unwrap () , (3 , 2)) ; assert_eq ! (ratio (3 , - 4) . unwrap () , (- 3 , 4)) ; assert_eq ! (ratio (1 , 3) . unwrap () , (1 , 3)) ; assert_eq ! (ratio (0 , 5) . unwrap () , (0 , 1)) ; } # [test] fn ratio_div_by_zero_is_explicit_error () { assert_eq ! (ratio (5 , 0) , Err (MathErr :: DivByZero)) ; } # [test] fn floor_is_exact () { assert_eq ! (floor (2.9) . unwrap () , 2) ; assert_eq ! (floor (- 2.1) . unwrap () , - 3) ; assert_eq ! (floor (3.0) . unwrap () , 3) ; } # [test] fn ceil_is_exact () { assert_eq ! (ceil (2.1) . unwrap () , 3) ; assert_eq ! (ceil (- 2.9) . unwrap () , - 2) ; assert_eq ! (ceil (3.0) . unwrap () , 3) ; } # [test] fn trunc_is_exact () { assert_eq ! (trunc (2.9) . unwrap () , 2) ; assert_eq ! (trunc (- 2.9) . unwrap () , - 2) ; assert_eq ! (trunc (3.0) . unwrap () , 3) ; } # [test] fn floor_nan_is_explicit_error () { assert_eq ! (floor (f64 :: NAN) , Err (MathErr :: OutOfDomain)) ; } # [test] fn floor_inf_is_explicit_error () { assert_eq ! (floor (f64 :: INFINITY) , Err (MathErr :: OutOfDomain)) ; } # [test] fn rounding_out_of_i64_range_is_explicit_overflow_never_silent () { let big = 1e20_f64 ; assert_eq ! (floor (big) , Err (MathErr :: Overflow)) ; assert_eq ! (ceil (big) , Err (MathErr :: Overflow)) ; assert_eq ! (trunc (big) , Err (MathErr :: Overflow)) ; assert_eq ! (round (big , RoundMode :: HalfToEven) , Err (MathErr :: Overflow)) ; assert_eq ! (floor (- 1e20_f64) , Err (MathErr :: Overflow)) ; assert_eq ! (trunc (9_223_372_036_854_775_808.0) , Err (MathErr :: Overflow)) ; assert_eq ! (trunc (9_223_372_036_854_774_784.0) . unwrap () , 9_223_372_036_854_774_784) ; assert_eq ! (trunc (- 9_223_372_036_854_775_808.0) . unwrap () , i64 :: MIN) ; } # [test] fn ratio_i64_min_canonicalization_overflow_is_explicit () { assert_eq ! (ratio (i64 :: MIN , - 1) , Err (MathErr :: Overflow)) ; } # [test] fn round_mode_is_echoed_back_as_explain_artifact () { for mode in [RoundMode :: Floor , RoundMode :: Ceil , RoundMode :: TruncTowardZero , RoundMode :: HalfAwayFromZero , RoundMode :: HalfToEven ,] { let (_ , returned_mode) = round (2.5 , mode) . unwrap () ; assert_eq ! (returned_mode , mode , \"mode must be echoed back\") ; } } # [test] fn round_half_even_rounds_to_even () { assert_eq ! (round (0.5 , RoundMode :: HalfToEven) . unwrap () . 0 , 0) ; assert_eq ! (round (1.5 , RoundMode :: HalfToEven) . unwrap () . 0 , 2) ; assert_eq ! (round (2.5 , RoundMode :: HalfToEven) . unwrap () . 0 , 2) ; assert_eq ! (round (- 0.5 , RoundMode :: HalfToEven) . unwrap () . 0 , 0) ; assert_eq ! (round (- 1.5 , RoundMode :: HalfToEven) . unwrap () . 0 , - 2) ; } # [test] fn round_half_away_from_zero () { assert_eq ! (round (0.5 , RoundMode :: HalfAwayFromZero) . unwrap () . 0 , 1) ; assert_eq ! (round (1.5 , RoundMode :: HalfAwayFromZero) . unwrap () . 0 , 2) ; assert_eq ! (round (- 0.5 , RoundMode :: HalfAwayFromZero) . unwrap () . 0 , - 1) ; } # [test] fn round_nan_is_explicit_error () { assert_eq ! (round (f64 :: NAN , RoundMode :: Floor) , Err (MathErr :: OutOfDomain)) ; } }",
+      "reason": "#[cfg(test)] item — out of scope for this PoC's transpilation surface (excluded from the expressible-fraction denominator, but recorded, never silently skipped)",
+      "item_name": "tests"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 1,
+      "col": 1,
+      "category": "InnerAttr",
+      "rust_construct": "InnerAttr",
+      "snippet": "# ! [forbid (unsafe_code)]",
+      "reason": "crate/file-level inner attributes (#![...]) are not transpiled (no nodule-header equivalent for these Rust-specific directives)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 91,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod approx ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "approx"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 92,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod exact ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "exact"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 93,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod matrix ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "matrix"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 95,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use approx :: { Approx , ApproxExplain } ;",
+      "reason": "`use approx::Approx` — `Approx` is not among sibling `approx`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use approx::ApproxExplain` — `ApproxExplain` is not among sibling `approx`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 97,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use matrix :: { assert_matrix_invariants , GuaranteeRow , GUARANTEE_MATRIX } ;",
+      "reason": "`use matrix::assert_matrix_invariants` — `assert_matrix_invariants` is not among sibling `matrix`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use matrix::GuaranteeRow` — `GuaranteeRow` is not among sibling `matrix`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use matrix::GUARANTEE_MATRIX` — `GUARANTEE_MATRIX` is not among sibling `matrix`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 101,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The explicit error set for fallible `std.math` ops (spec §3; C1 / G2).\"] # [doc = \"\"] # [doc = \" Every domain restriction surfaces as one of these variants — **never** as a NaN, ±Inf,\"] # [doc = \" sentinel, or silent clamp. The variant name is the EXPLAIN artifact for a refusal (C3).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum MathErr { # [doc = \" Division (or ratio construction) with a zero divisor.\"] DivByZero , # [doc = \" Argument is negative where it must be non-negative (e.g. `sqrt(x < 0)`).\"] NegativeDomain , # [doc = \" Argument is non-positive where it must be strictly positive (e.g. `log(x ≤ 0)`).\"] NonPositiveDomain , # [doc = \" Base argument is invalid for `logb` (e.g. base ≤ 0, base = 1, or base is NaN/Inf).\"] BadBase , # [doc = \" Argument is at a pole of the function (e.g. `tan` at an odd multiple of π/2).\"] PoleDomain , # [doc = \" Argument is outside the function's domain (e.g. `asin(|x| > 1)`).\"] OutOfDomain , # [doc = \" Result magnitude exceeds the representable range of `f64`.\"] Overflow , }",
+      "reason": "enum `MathErr` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "MathErr"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 101,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The explicit error set for fallible `std.math` ops (spec §3; C1 / G2).\"] # [doc = \"\"] # [doc = \" Every domain restriction surfaces as one of these variants — **never** as a NaN, ±Inf,\"] # [doc = \" sentinel, or silent clamp. The variant name is the EXPLAIN artifact for a refusal (C3).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum MathErr { # [doc = \" Division (or ratio construction) with a zero divisor.\"] DivByZero , # [doc = \" Argument is negative where it must be non-negative (e.g. `sqrt(x < 0)`).\"] NegativeDomain , # [doc = \" Argument is non-positive where it must be strictly positive (e.g. `log(x ≤ 0)`).\"] NonPositiveDomain , # [doc = \" Base argument is invalid for `logb` (e.g. base ≤ 0, base = 1, or base is NaN/Inf).\"] BadBase , # [doc = \" Argument is at a pole of the function (e.g. `tan` at an odd multiple of π/2).\"] PoleDomain , # [doc = \" Argument is outside the function's domain (e.g. `asin(|x| > 1)`).\"] OutOfDomain , # [doc = \" Result magnitude exceeds the representable range of `f64`.\"] Overflow , }",
+      "reason": "enum `MathErr` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "MathErr"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 101,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The explicit error set for fallible `std.math` ops (spec §3; C1 / G2).\"] # [doc = \"\"] # [doc = \" Every domain restriction surfaces as one of these variants — **never** as a NaN, ±Inf,\"] # [doc = \" sentinel, or silent clamp. The variant name is the EXPLAIN artifact for a refusal (C3).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq)] pub enum MathErr { # [doc = \" Division (or ratio construction) with a zero divisor.\"] DivByZero , # [doc = \" Argument is negative where it must be non-negative (e.g. `sqrt(x < 0)`).\"] NegativeDomain , # [doc = \" Argument is non-positive where it must be strictly positive (e.g. `log(x ≤ 0)`).\"] NonPositiveDomain , # [doc = \" Base argument is invalid for `logb` (e.g. base ≤ 0, base = 1, or base is NaN/Inf).\"] BadBase , # [doc = \" Argument is at a pole of the function (e.g. `tan` at an odd multiple of π/2).\"] PoleDomain , # [doc = \" Argument is outside the function's domain (e.g. `asin(|x| > 1)`).\"] OutOfDomain , # [doc = \" Result magnitude exceeds the representable range of `f64`.\"] Overflow , }",
+      "reason": "enum `MathErr` derive(Eq): covered by co-occurring PartialEq → `fn eq_MathErr` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "MathErr"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 123,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl core :: fmt :: Display for MathErr { fn fmt (& self , f : & mut core :: fmt :: Formatter < '_ >) -> core :: fmt :: Result { let s = match self { MathErr :: DivByZero => \"DivByZero: divisor is zero\" , MathErr :: NegativeDomain => { \"NegativeDomain: argument must be non-negative (e.g. sqrt requires x >= 0)\" } MathErr :: NonPositiveDomain => { \"NonPositiveDomain: argument must be strictly positive (e.g. log requires x > 0)\" } MathErr :: BadBase => { \"BadBase: logarithm base must be > 0, != 1, and finite (e.g. logb(b, x))\" } MathErr :: PoleDomain => { \"PoleDomain: argument is at a pole of the function (e.g. tan at pi/2 + n*pi)\" } MathErr :: OutOfDomain => { \"OutOfDomain: argument is outside the function's domain (e.g. asin requires |x| <= 1)\" } MathErr :: Overflow => { \"Overflow: result magnitude exceeds the representable range of f64\" } } ; f . write_str (s) } }",
+      "reason": "trait-impl of non-prelude trait `Display` — no ambient trait definition and synthetic trait emission is refused (DN-34 §8.8 / DN-122 MVP); gapped the whole impl so the residual cannot file-poison myc-check (G2; express gap-close 2026-07-16)",
+      "item_name": "MathErr"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "line": 150,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "mycelium_std_core :: impl_std_error ! (MathErr) ;",
+      "reason": "item-position macro invocation — no macro system in this grammar",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/matrix.rs",
+      "line": 21,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_core :: GuaranteeStrength ;",
+      "reason": "`use mycelium_core::GuaranteeStrength` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/matrix.rs",
+      "line": 23,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" One row of the `std.math` guarantee matrix (RFC-0016 §4.5; spec §4).\"] # [doc = \"\"] # [doc = \" Encoded as data so tests can assert invariants structurally — never prose-only.\"] # [derive (Debug , Clone , PartialEq , Eq)] pub struct GuaranteeRow { # [doc = \" The exported op's name.\"] pub op : & 'static str , # [doc = \" The honest guarantee tag on `Exact ⊐ Proven ⊐ Empirical ⊐ Declared`.\"] # [doc = \"\"] # [doc = \" For approximate ops this is the strength the `bound.basis` justifies (VR-5); it is never\"] # [doc = \" asserted above what the evidence supports.\"] pub tag : GuaranteeStrength , # [doc = \" Whether the op returns a `Result` / is fallible.\"] pub fallible : bool , # [doc = \" The explicit error set (or `\\\"total\\\"` for total ops).\"] pub error_set : & 'static str , # [doc = \" Declared effects (`\\\"none\\\"` for all pure math ops, per C6).\"] pub effects : & 'static str , # [doc = \" Whether the op surfaces an inspectable EXPLAIN artifact (C3).\"] pub explainable : bool , }",
+      "reason": "struct `GuaranteeRow` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "GuaranteeRow"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/matrix.rs",
+      "line": 45,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" The `std.math` guarantee matrix (spec §4; RFC-0016 §4.5).\"] # [doc = \"\"] # [doc = \" All approximate rows carry `Declared` (see the module honesty note). Every invariant is\"] # [doc = \" asserted via [`assert_matrix_invariants`].\"] pub const GUARANTEE_MATRIX : & [GuaranteeRow] = & [GuaranteeRow { op : \"abs\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(Overflow) when x == i64::MIN\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"neg\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(Overflow) when x == i64::MIN\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"signum\" , tag : GuaranteeStrength :: Exact , fallible : false , error_set : \"total\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"min\" , tag : GuaranteeStrength :: Exact , fallible : false , error_set : \"total (tie rule: first arg; documented, never silent)\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"max\" , tag : GuaranteeStrength :: Exact , fallible : false , error_set : \"total (tie rule: first arg; documented, never silent)\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"gcd\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(Overflow) when the true gcd is 2^63 (inputs drawn from {0, i64::MIN})\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"lcm\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(Overflow)\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"checked_div\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(DivByZero | Overflow)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"checked_rem\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(DivByZero | Overflow)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"ratio\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(DivByZero | Overflow)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"floor\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(OutOfDomain) for NaN/infinite; Err(Overflow) when out of i64 range\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"ceil\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(OutOfDomain) for NaN/infinite; Err(Overflow) when out of i64 range\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"trunc\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(OutOfDomain) for NaN/infinite; Err(Overflow) when out of i64 range\" , effects : \"none\" , explainable : false , } , GuaranteeRow { op : \"round\" , tag : GuaranteeStrength :: Exact , fallible : true , error_set : \"Err(OutOfDomain) for NaN/infinite; Err(Overflow) when out of i64 range\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"sqrt\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(NegativeDomain)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"cbrt\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain) for NaN or infinite\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"exp\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(Overflow | OutOfDomain)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"log\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(NonPositiveDomain)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"logb\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(NonPositiveDomain | BadBase)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"pow\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(DivByZero | OutOfDomain | Overflow)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"hypot\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain | Overflow)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"sin\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain) for NaN or infinite\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"cos\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain) for NaN or infinite\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"tan\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain | PoleDomain)\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"asin\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain) when |x| > 1\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"acos\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain) when |x| > 1\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"atan\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain) for NaN or infinite\" , effects : \"none\" , explainable : true , } , GuaranteeRow { op : \"atan2\" , tag : GuaranteeStrength :: Declared , fallible : true , error_set : \"Err(OutOfDomain | PoleDomain)\" , effects : \"none\" , explainable : true , } ,] ;",
+      "reason": "top-level `const GUARANTEE_MATRIX` — co-emit (ORACLE-R1 A4) only covers plain unsigned integer types (`u8`/`u16`/`u32`/`u64`/`u128`/`usize`); other types have no const item production and no faithful zero-arg-fn encoding (gap, never fabricate)",
+      "item_name": "GUARANTEE_MATRIX"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/matrix.rs",
+      "line": 280,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Assert structural invariants on [`GUARANTEE_MATRIX`] — the RFC-0016 §4.5 obligation.\"] # [doc = \"\"] # [doc = \" Called from the test suite. Panics with a descriptive message on any violation.\"] pub fn assert_matrix_invariants () { for row in GUARANTEE_MATRIX { assert ! (! row . op . is_empty () , \"matrix row has empty op name\") ; assert ! (! row . error_set . is_empty () , \"op {}: error_set must be non-empty\" , row . op) ; assert_eq ! (row . effects , \"none\" , \"op {}: all math ops must be effect-free (C6)\" , row . op) ; if row . tag != GuaranteeStrength :: Exact { assert ! (row . explainable , \"op {}: non-Exact ops must be EXPLAIN-able (C3 — carries bound cert)\" , row . op) ; } if row . fallible { assert_ne ! (row . error_set , \"total\" , \"op {}: fallible op must name its error set\" , row . op) ; } } }",
+      "reason": "function has no return type (implicit `()`) — no unit value is representable in this grammar fragment",
+      "item_name": "assert_matrix_invariants"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/matrix.rs",
+      "line": 318,
+      "col": 1,
+      "category": "TestItem",
+      "rust_construct": "TestItem",
+      "snippet": "# [cfg (test)] mod tests { use super :: * ; # [doc = \" Matrix structural invariants hold (RFC-0016 §4.5).\"] # [test] fn matrix_invariants_hold () { assert_matrix_invariants () ; } # [doc = \" All expected ops appear in the matrix exactly once.\"] # [test] fn matrix_contains_all_ops_exactly_once () { let expected = [\"abs\" , \"neg\" , \"signum\" , \"min\" , \"max\" , \"gcd\" , \"lcm\" , \"checked_div\" , \"checked_rem\" , \"ratio\" , \"floor\" , \"ceil\" , \"trunc\" , \"round\" , \"sqrt\" , \"cbrt\" , \"exp\" , \"log\" , \"logb\" , \"pow\" , \"hypot\" , \"sin\" , \"cos\" , \"tan\" , \"asin\" , \"acos\" , \"atan\" , \"atan2\" ,] ; for op in & expected { let count = GUARANTEE_MATRIX . iter () . filter (| r | r . op == * op) . count () ; assert_eq ! (count , 1 , \"op '{op}' must appear exactly once in the matrix\") ; } assert_eq ! (GUARANTEE_MATRIX . len () , expected . len () , \"matrix row count must match the expected op list\") ; } # [doc = \" Exact ops are never EXPLAIN-able for accuracy (they have no accuracy semantics).\"] # [doc = \"\"] # [doc = \" Exception: exact ops that carry a refusal record (checked_div, checked_rem, ratio, round)\"] # [doc = \" ARE EXPLAIN-able — the refusal record / mode is the EXPLAIN artifact (C3). This test\"] # [doc = \" verifies the full policy: non-exact ops MUST be explain-able; exact ops that are NOT\"] # [doc = \" refusal-carriers must NOT be explain-able.\"] # [test] fn exact_non_refusal_ops_are_not_explainable () { let exact_non_explain = [\"abs\" , \"neg\" , \"signum\" , \"min\" , \"max\" , \"gcd\" , \"lcm\" , \"floor\" , \"ceil\" , \"trunc\" ,] ; for op in & exact_non_explain { let row = GUARANTEE_MATRIX . iter () . find (| r | r . op == * op) . unwrap () ; assert ! (! row . explainable , \"op {op}: exact non-refusal op must not be marked explainable\") ; } } # [doc = \" Non-exact ops (approximate family) are all EXPLAIN-able (C3 — carry bound cert).\"] # [test] fn non_exact_ops_are_explainable () { for row in GUARANTEE_MATRIX { if row . tag != GuaranteeStrength :: Exact { assert ! (row . explainable , \"op {}: non-Exact op must be EXPLAIN-able (C3)\" , row . op) ; } } } # [doc = \" All approximate ops carry `Declared` strength (VR-5 honesty — libm floor, FLAG M-541).\"] # [doc = \"\"] # [doc = \" Mutation witness: changing any approximate op to `Empirical`/`Proven` → assertion fires.\"] # [test] fn approximate_ops_carry_declared_not_higher () { let approximate_ops = [\"sqrt\" , \"cbrt\" , \"exp\" , \"log\" , \"logb\" , \"pow\" , \"hypot\" , \"sin\" , \"cos\" , \"tan\" , \"asin\" , \"acos\" , \"atan\" , \"atan2\" ,] ; for op in & approximate_ops { let row = GUARANTEE_MATRIX . iter () . find (| r | r . op == * op) . unwrap () ; assert_eq ! (row . tag , GuaranteeStrength :: Declared , \"op {op}: approximate ops must carry Declared (not higher) while libm floor is \\\n                 unaudited (VR-5; FLAG M-541 — upgrade requires a checked basis, never asserted)\") ; } } # [doc = \" All ops declare effects = \\\"none\\\" (C6 — all math ops are pure).\"] # [test] fn all_ops_are_effect_free () { for row in GUARANTEE_MATRIX { assert_eq ! (row . effects , \"none\" , \"op {}: all std.math ops must be effect-free (C6)\" , row . op) ; } } }",
+      "reason": "#[cfg(test)] item — out of scope for this PoC's transpilation surface (excluded from the expressible-fraction denominator, but recorded, never silently skipped)",
+      "item_name": "tests"
+    }
+  ],
+  "category_counts": {
+    "DeriveAttr": 2,
+    "DeriveSatisfied": 6,
+    "Impl": 3,
+    "Import": 5,
+    "InnerAttr": 1,
+    "MacroInvocation": 1,
+    "ModuleDecl": 3,
+    "MultiStmtBody": 23,
+    "Other": 7,
+    "Struct": 3,
+    "TestItem": 3
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "records": [
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-std-math-myc/experiments/vet/approx.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/approx.rs",
+      "class": "Clean",
+      "exit_code": 0,
+      "diagnostic": "",
+      "non_test_items": 22,
+      "emitted_items": 1
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-std-math-myc/experiments/vet/exact.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/exact.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `max`: unknown function/constructor/prim `gte`",
+      "non_test_items": 17,
+      "emitted_items": 4
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-std-math-myc/experiments/vet/lib.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/lib.rs",
+      "class": "Clean",
+      "exit_code": 0,
+      "diagnostic": "",
+      "non_test_items": 6,
+      "emitted_items": 2
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-std-math-myc/experiments/vet/matrix.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-std-math/src/matrix.rs",
+      "class": "Clean",
+      "exit_code": 0,
+      "diagnostic": "",
+      "non_test_items": 4,
+      "emitted_items": 0
+    }
+  ],
+  "total_non_test_items": 49,
+  "total_emitted_items": 7,
+  "total_checked_clean_items": 3,
+  "class_counts": {
+    "CheckError": 1,
+    "Clean": 3
+  },
+  "phylum": {
+    "ran": true,
+    "ok": false,
+    "nodules": [
+      {
+        "nodule": "std.math.approx",
+        "file": "approx.myc",
+        "class": "Clean",
+        "site": null,
+        "on": null,
+        "message": null
+      },
+      {
+        "nodule": "std.math.exact",
+        "file": "exact.myc",
+        "class": "CheckError",
+        "site": "max",
+        "on": null,
+        "message": "unknown function/constructor/prim `gte`"
+      },
+      {
+        "nodule": "std.math",
+        "file": "lib.myc",
+        "class": "Clean",
+        "site": null,
+        "on": null,
+        "message": null
+      },
+      {
+        "nodule": "std.math.matrix",
+        "file": "matrix.myc",
+        "class": "Clean",
+        "site": null,
+        "on": null,
+        "message": null
+      }
+    ],
+    "diagnostic": "unknown function/constructor/prim `gte`"
+  },
+  "total_checked_clean_items_phylum": 3
+}

@@ -1,0 +1,37 @@
+// nodule: std.math.approx
+// Approximate numeric operations and the `Approx<f64>` bound-carrying carrier (spec §3 / §4).
+//
+// # `Approx<f64>` — the thin bound carrier
+//
+// Per `math.md §7-Q1` (resolved by the `numerics`/README §5 reconciliation), `Approx<T>` is a
+// *thin view* — a plain value with its `Meta`-attached `{Bound, strength}`, **not** a new numeric
+// type. In this Rust-first implementation it is a struct holding the `f64` result and the
+// `mycelium_core::Bound` that certifies it; no kernel change is introduced (KC-3).
+//
+// # Honesty (VR-5)
+//
+// All approximate ops in this module carry `Declared` strength because the transcendental compute
+// floor is the platform libm via Rust's `f64` intrinsics — an unaudited `wild` floor (ADR-014;
+// FLAG in `lib.rs`; M-541). The `Declared` tag is the *honest* floor: we assert an ε bound, but
+// its basis is `UserDeclared` because no checked-side-condition theorem backs the libm call yet.
+// When M-541 lands and the `std-sys` phylum provides an audited surface, the basis can be
+// upgraded to `ProvenThm` (and thus the strength to `Proven`) — but that upgrade requires a
+// checked basis, never an unilateral assertion (VR-5).
+//
+// The ε values used below are conservative float-op error bounds in the Linf norm:
+//   - For scalar transcendentals: 1 ULP ≈ 2^-52 of the result, but we use a conservative
+//     `2 * f64::EPSILON` ≈ 4.4e-16 as a Declared upper bound (no proven theorem backs it here).
+//   - For `round`/`floor`/`ceil`/`trunc`: exact integer-valued results carry ε = 0; the
+//     rounding operation itself is `Exact` in the sense that it always returns the integer nearest
+//     the input under the named mode (the mode IS the specification).
+//
+// **FLAG (ε-ownership):** the concrete ε values used here are `Declared` assertions; the exact
+// magnitudes, norms, and `Proven` reachability are owned by ADR-010 / M-512 (spec §7-Q2). These
+// values should be replaced with M-512's when it lands.
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule std.math.approx;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: std.math) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type MathErr = DivByZero | NegativeDomain | NonPositiveDomain | BadBase | PoleDomain | OutOfDomain | Overflow;

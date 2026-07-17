@@ -1,0 +1,56 @@
+// nodule: std.math.exact
+// Exact numeric operations and reified rounding (spec §3 / §4).
+//
+// All functions in this module are `Exact` — they return the mathematically correct result or an
+// explicit `Err`; no approximation, no NaN, no sentinel (C1/C2/G2).
+//
+// # Rounding
+//
+// [`round`] is `Exact` in the sense that the rounding is the *exact image* under the named,
+// reified [`RoundMode`]. The mode IS the specification: it is the inspectable artifact that makes
+// the operation EXPLAIN-able (C3). No ambient rounding mode; no hidden default.
+//
+// # Integer ops
+//
+// `abs`, `neg`, `signum`, `min`/`max`, `gcd`/`lcm`, `checked_div`/`checked_rem` all operate over
+// `i64` for simplicity in this Rust-first implementation. The spec uses `Int` (Mycelium's abstract
+// integer); when the full value model lands, these will be lifted to `Value`-typed surfaces. The
+// tie rule for `min`/`max` is documented: `min` returns the first argument on a tie, `max`
+// returns the first argument on a tie — stable and documented, never silent (C1).
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule std.math.exact;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: std.math) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type MathErr = DivByZero | NegativeDomain | NonPositiveDomain | BadBase | PoleDomain | OutOfDomain | Overflow;
+
+// The reified rounding mode for [`round`] (spec §3; C3 / SC-3 / G11).
+//
+// The mode is a **required** argument — never a hidden ambient default. Each variant is an
+// inspectable, named specification of the rounding operation. The EXPLAIN artifact for a
+// `round` call is the `RoundMode` value itself plus the resulting integer.
+pub type RoundMode = Floor | Ceil | TruncTowardZero | HalfAwayFromZero | HalfToEven;
+
+impl Show[RoundMode] for RoundMode {
+  fn render(x: RoundMode) => Bytes =
+    match x { Floor => "Floor", Ceil => "Ceil", TruncTowardZero => "TruncTowardZero", HalfAwayFromZero => "HalfAwayFromZero", HalfToEven => "HalfToEven" };
+};
+
+fn eq_RoundMode(a: RoundMode, b: RoundMode) => Binary{1} =
+  match a { Floor => match b { Floor => 0b1, _ => 0b0 }, Ceil => match b { Ceil => 0b1, _ => 0b0 }, TruncTowardZero => match b { TruncTowardZero => 0b1, _ => 0b0 }, HalfAwayFromZero => match b { HalfAwayFromZero => 0b1, _ => 0b0 }, HalfToEven => match b { HalfToEven => 0b1, _ => 0b0 } };
+
+// `min(a, b)` — minimum of two signed integers.
+//
+// **Guarantee: `Exact`, total.**
+//
+// Tie rule: when `a == b`, returns `a` (the first argument). This is documented, stable, and
+// never a silent loss of which input won (C1).
+fn min(a: Binary{64}, b: Binary{64}) => Binary{64} = if lte(a, b) then a else b;
+
+// `max(a, b)` — maximum of two signed integers.
+//
+// **Guarantee: `Exact`, total.**
+//
+// Tie rule: when `a == b`, returns `a` (the first argument). Documented and stable (C1).
+fn max(a: Binary{64}, b: Binary{64}) => Binary{64} = if gte(a, b) then a else b;
